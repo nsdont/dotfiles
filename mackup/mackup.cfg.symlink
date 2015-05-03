@@ -39,14 +39,18 @@ directory = Mackup
 #
 # For example, to sync Irssi, Ventrilo and XEmacs, add:
 [applications_to_sync]
-aws
+atom
 dash
 flux
+keka
 iterm2
-moom
+navicat
+omnifocus
+pip
+popclip
+istat-menus-5
 oh-my-zsh
 sourcetree
-sublime-text-3
 ssh
 
 # List of applications you want to ignore

@@ -1,20 +1,19 @@
-[hub]
-  protocol = https
 [user]
-  name = Amo Wu
-  email = amo260@gmail.com
-[credential]
-  helper = osxkeychain
+	name = NSDont
+	email = haodewanan@gmail.com
 [alias]
+  st = status
   co = checkout
-  switch = !legit switch \"$@\"
-  branches = !legit branches
-  sprout = !legit sprout \"$@\"
-  unpublish = !legit unpublish \"$@\"
-  harvest = !legit harvest \"$@\"
-  sync = !legit sync \"$@\"
-  publish = !legit publish \"$@\"
-  graft = !legit graft \"$@\"
+  br = branch
+  ci = commit
+  re = reset
+  rb = rebase
+  rbi = rebase -i
+  rbim = rebase -i origin/master
+  rbc = rebase --continue
+  fe = fetch
+  cp = cherry-pick
+  lg = log
 [color]
   diff = auto
   status = auto
@@ -22,8 +21,10 @@
   log = auto
   ui = true
 [core]
-  excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore_global
   editor = vim
+[init]
+  templatedir = ~/.git-templates
 [mergetool]
   keepBackup = false
 [difftool]
@@ -37,8 +38,8 @@
   # Setting to git 2.0 default to surpress warning message
   default = simple
 [difftool "sourcetree"]
-  cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-  path = 
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
 [mergetool "sourcetree"]
-  cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-  trustExitCode = true
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

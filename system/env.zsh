@@ -1,2 +1,2 @@
-export VISUAL='subl -w'
-export EDITOR='subl -w'
+export VISUAL='vim'
+export EDITOR='/usr/local/bin/vim'

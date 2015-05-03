@@ -7,12 +7,36 @@
 
 # Binaries
 binaries=(
+  ack
+  autoenv
+  autojump
+  curl
+  gettext
+  htop-osx
+  wget
+  redis
+  jpeg
+  libxml++
+  ruby
+  fortune
+  openjpeg
+  macvim
+  sqlite
+  zsh-completions
+  freetype
+  postgresql
+  mysql
+  go
+  goaccess
+  graphviz
+  ctags
   boot2docker
   docker
+  python
+  python3
+  vim
   git-flow
   grc
-  hub
-  legit
   mackup
   nvm
   ssh-copy-id
@@ -22,7 +46,9 @@ binaries=(
 
 # Apps
 apps=(
+  1password
   alfred
+  calibre
   dash
   dropbox
   evernote
@@ -33,15 +59,24 @@ apps=(
   keka
   mou
   obs
+  paw
   qlcolorcode
   qlmarkdown
   qlstephen
   qq
+  rdm
   recordit
+  omnifocus
+  omnioutliner
+  istat-menus
+  skype
   sourcetree
   sublime-text3
+  thunder
+  vitamin-r
   virtualbox
-  vlc
+  mplayerx
+  navicat-premium
 )
 
 # Fonts
