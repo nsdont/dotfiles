@@ -8,37 +8,46 @@
 # Binaries
 binaries=(
   ack
+  aircrack-ng
+  autoconf
   autoenv
+  boot2docker
   autojump
+  cmake
+  coreutils
   curl
+  ctags
+  docker
+  erlang
+  freetype
+  go
+  git
+  git-flow
   gettext
+  goaccess
+  graphviz
   htop-osx
   wget
   redis
   jpeg
   libxml++
+  libffi
+  libpng
+  libtiff
+  libyaml
   ruby
   fortune
   openjpeg
   macvim
+  mackup
+  mysql
   sqlite
   zsh-completions
   freetype
   postgresql
-  mysql
-  go
   goaccess
-  graphviz
-  ctags
-  boot2docker
-  docker
   python
   python3
-  vim
-  git-flow
-  grc
-  mackup
-  nvm
   ssh-copy-id
   trash
   tree
@@ -49,16 +58,27 @@ apps=(
   1password
   alfred
   calibre
+  catchmouse
   dash
   dropbox
   evernote
   flux
   google-chrome
+  istat-menus
   iterm2
   kaleidoscope
   keka
+  kindle
   mou
+  mplayerx
+  navicat-premium
+  neteasemusic
+  nutstore
   obs
+  omnifocus
+  omnigraffle
+  omnioutliner
+  omniplan
   paw
   qlcolorcode
   qlmarkdown
@@ -66,17 +86,16 @@ apps=(
   qq
   rdm
   recordit
-  omnifocus
-  omnioutliner
-  istat-menus
+  shadowsocksx
+  steam
   skype
   sourcetree
   sublime-text3
+  textexpander
   thunder
-  vitamin-r
+  today-scripts
+  utorrent
   virtualbox
-  mplayerx
-  navicat-premium
 )
 
 # Fonts
