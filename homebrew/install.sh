@@ -11,14 +11,13 @@ binaries=(
   aircrack-ng
   autoconf
   autoenv
-  boot2docker
   autojump
   cmake
   coreutils
   curl
   ctags
-  docker
   erlang
+  fortune
   freetype
   go
   git
@@ -27,11 +26,12 @@ binaries=(
   goaccess
   graphviz
   htop-osx
-  wget
   redis
   jpeg
-  libxml++
+  libevent
   libffi
+  libxml++
+  libmagic
   libpng
   libtiff
   libyaml
@@ -41,16 +41,24 @@ binaries=(
   macvim
   mackup
   mysql
-  sqlite
-  zsh-completions
-  freetype
+  nginx
+  nmap
+  node
+  openjpeg
+  openssl
   postgresql
-  goaccess
   python
   python3
+  rabbitmq
+  redis
   ssh-copy-id
+  sqlite
   trash
   tree
+  vim
+  wget
+  zsh
+  zsh-completions
 )
 
 # Apps
@@ -61,6 +69,8 @@ apps=(
   catchmouse
   dash
   dropbox
+  dockertoolbox
+  dayone-cli
   evernote
   flux
   google-chrome
@@ -92,10 +102,12 @@ apps=(
   sourcetree
   sublime-text3
   textexpander
+  sogouinput
   thunder
   today-scripts
   utorrent
   virtualbox
+  vagrant
 )
 
 # Fonts
