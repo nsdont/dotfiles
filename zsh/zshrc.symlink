@@ -76,12 +76,21 @@ alias cnpm="npm --registry=http://registry.npm.taobao.org \
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 alias gfb='git fetch && git rebase -i origin/develop'
 alias ufab="fab -f ~/bin/fabfile.py"
+alias http_track="export http_proxy=http://127.0.0.1:9396"
 
+alias pip_upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 alias hmcl='cd ~/Game/hmcl && java -jar HMCL-2.2.8.jar'
 alias rm='trash'
+alias gngrok='~/bin/ngrok --config ~/bin/ngrok.cfg'
+
+# docker
+alias dj='docker-compose run --rm server'
+alias djs='docker-compose run --rm --service-ports server'
+alias coverage_test='docker-compose run --rm server coverage run --source=. ./manage.py test -k' 
+alias coverage_html='docker-compose run --rm server coverage html' 
 
 # function
-function acm {gcc -o run "$1" && cat input | ./run}
+# function acm {gcc -o run "$1" && cat input | ./run}
 
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
 
@@ -101,8 +110,10 @@ export EDITOR=/usr/local/bin/vim
 export CHEATCOLOR=true
 
 # autoenv
-# source /usr/local/opt/autoenv/activate.sh
-# source ~/.dotfiles/lib/zsh-autoenv/autoenv.zsh
+[ -f .env ] && source .env
+
+# go
+export GOPATH=~/Documents/Practice/go
 
 # fortune
 echo
