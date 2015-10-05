@@ -21,7 +21,7 @@ Plug 'nvie/vim-flake8'
 Plug 'scrooloose/nerdcommenter'
 
 " Code to execute when the plugin is loaded on demand
-Plug 'Valloric/YouCompleteMe', { 'for': 'cpp', 'do': './install.py --clang-completer'}
+Plug 'Valloric/YouCompleteMe', { 'for': 'py', 'do': './install.py'}
 autocmd! User YouCompleteMe call youcompleteme#Enable()
 
 " Theme
