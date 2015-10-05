@@ -66,7 +66,6 @@ apps=(
   1password
   alfred
   calibre
-  catchmouse
   dash
   dropbox
   dockertoolbox
@@ -81,10 +80,10 @@ apps=(
   kindle
   mou
   mplayerx
+  moom
   navicat-premium
   neteasemusic
   nutstore
-  obs
   omnifocus
   omnigraffle
   omnioutliner
@@ -96,13 +95,13 @@ apps=(
   qq
   rdm
   recordit
+  seafile-client
   shadowsocksx
-  steam
   skype
   sourcetree
+  sogouinput
   sublime-text3
   textexpander
-  sogouinput
   thunder
   today-scripts
   utorrent
@@ -112,7 +111,6 @@ apps=(
 
 # Fonts
 fonts=(
-  font-roboto
   font-source-code-pro
 )
 
@@ -140,7 +138,7 @@ brew cask install ${fonts[@]}
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
 echo "Installing apps..."
-sudo brew cask install --appdir="/Applications" ${apps[@]}
+sudo brew cask install -v --appdir="/Applications" ${apps[@]}
 
 # clean things up
 brew cleanup
