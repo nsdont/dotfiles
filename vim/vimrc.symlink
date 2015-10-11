@@ -19,6 +19,7 @@ Plug 'dyng/ctrlsf.vim'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'nvie/vim-flake8'
 Plug 'scrooloose/nerdcommenter'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Code to execute when the plugin is loaded on demand
 Plug 'Valloric/YouCompleteMe', { 'for': 'py', 'do': './install.py'}
@@ -37,20 +38,49 @@ call plug#end()
 """ 基础配置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Base Setup
-set nu
+" 自适应不同语言的智能缩进
+filetype indent on
+" 将制表符扩展为空格
+set expandtab
 set noswapfile
 set colorcolumn=79
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+" 禁止折行
+set nowrap
 "setlocal textwidth=79
-set smarttab
-set expandtab
 set backspace=2 " make backspace work like most other apps
-
+" 开启实时搜索功能
+set incsearch
+" 搜索时大小写不敏感
+set ignorecase
+" 关闭兼容模式
+set nocompatible
+" vim 自身命令行模式智能补全
+set wildmenu
 " 关闭滚动条
 set guioptions=Ace 
+" 禁止光标闪烁
+set gcr=a:block-blinkon0
+" 兼容crontab
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
+" 总是显示状态栏
+set laststatus=2
+" 显示光标当前位置
+set ruler
+" 开启行号显示
+set number
+" 高亮显示当前行/列
+set cursorline
+set cursorcolumn
+" 高亮显示搜索结果
+set hlsearch
+" 基于缩进或语法进行代码折叠
+"set foldmethod=indent
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
 
 " Font
 if has("gui_running")
@@ -81,6 +111,7 @@ set clipboard=unnamed
 
 " Theme配置
 syntax enable
+syntax on
 set background=light
 let g:solarized_termcolors=256
 colorscheme solarized
@@ -202,6 +233,25 @@ let g:ycm_key_list_select_completion = ['<Down>']
 let g:ycm_key_list_previous_completion = ['<Up>']
 " 修改对C函数的补全快捷键，默认是CTRL + space，修改为ALT + ;
 let g:ycm_key_invoke_completion = '<M-;>'
+" YCM 补全菜单配色
+" 菜单
+highlight Pmenu ctermfg=2 ctermbg=3 guifg=#005f87 guibg=#EEE8D5
+" 选中项
+highlight PmenuSel ctermfg=2 ctermbg=3 guifg=#AFD700 guibg=#106900
+" 补全功能在注释中同样有效
+let g:ycm_complete_in_comments=1
+" 允许 vim 加载 .ycm_extra_conf.py 文件，不再提示
+let g:ycm_confirm_extra_conf=0
+" 开启 YCM 标签补全引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+" 补全内容不以分割子窗口形式出现，只显示补全列表
+set completeopt-=preview
+" 从第一个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=1
+" 禁止缓存匹配项，每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 语法关键字补全         
+let g:ycm_seed_identifiers_with_syntax=1
 
 """"""""""""""""""""""""""""""
 " => ctrlp.vim
@@ -226,3 +276,21 @@ nmap <c-c> <Plug>CtrlSFPrompt
 """"""""""""""""""""""""""""""
 let g:flake8_cmd="/usr/local/bin/flake8"
 autocmd BufWritePost *.py call Flake8()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-airline config (force color)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline_theme="luna"
+let g:airline#extensions#tabline#enabled = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => vim-indent-guides
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 随 vim 自启动
+let g:indent_guides_enable_on_vim_startup=1
+" 从第二层开始可视化显示缩进
+let g:indent_guides_start_level=2
+" 色块宽度
+let g:indent_guides_guide_size=1
+" 快捷键 i 开/关缩进可视化
+:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
