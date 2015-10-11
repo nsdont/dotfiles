@@ -42,7 +42,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git cp docker extract git-extract autojump brew osx zsh-syntax-highlighting autopep8)
+plugins=(git cp docker extract git-extract autojump brew osx zsh-syntax-highlighting autopep8 autoenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -64,7 +64,7 @@ alias -s bz2='tar -xjvf'
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 alias grep="grep --color=auto"
 alias mocha='mocha -R spec'
-alias pgstart="pg_ctl -D /usr/local/var/postgres_940 -l /usr/local/var/postgres_940/server.log start"
+alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
 alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias vpn_start="export http_proxy='http://127.0.0.1:8118'; export https_proxy='http://127.0.0.1:8118'"
 alias hidefile="defaults write com.apple.finder AppleShowAllFiles No && killall Finder"
@@ -81,7 +81,7 @@ alias http_track="export http_proxy=http://127.0.0.1:9396"
 alias pip_upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 alias hmcl='cd ~/Game/hmcl && java -jar HMCL-2.2.8.jar'
 alias rm='trash'
-alias gngrok='~/bin/ngrok --config ~/bin/ngrok.cfg'
+alias gngrok='~/bin/ngrok1.7 --config ~/bin/ngrok.cfg'
 
 # docker
 alias dj='docker-compose run --rm server'
