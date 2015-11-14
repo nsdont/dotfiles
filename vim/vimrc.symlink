@@ -77,8 +77,8 @@ set cursorcolumn
 " 高亮显示搜索结果
 set hlsearch
 " 基于缩进或语法进行代码折叠
-"set foldmethod=indent
-set foldmethod=syntax
+"set fdm=syntax
+set fdm=indent
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 
@@ -136,6 +136,8 @@ autocmd BufWritePre *.py :%s/\s\+$//e
 """"""""""""""""""""""""""""""
 
 map <F12> :so $MYVIMRC<CR>
+" 取消当前搜索高亮
+map <Leader><CR> :noh<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ 插件配置
@@ -281,7 +283,6 @@ autocmd BufWritePost *.py call Flake8()
 " => vim-airline config (force color)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:airline_theme="luna"
-let g:airline#extensions#tabline#enabled = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-indent-guides
@@ -294,3 +295,14 @@ let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
 " 快捷键 i 开/关缩进可视化
 :nmap <silent> <Leader>i <Plug>IndentGuidesToggle
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => SirVer/ultisnips
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
