@@ -101,7 +101,6 @@ if __name__ == "__main__":
     if now.weekday() == 5:
         # 生成周报
         main((today - timedelta(6)).timestamp() - base_timestamp, 'Weekly')
-    main((today - timedelta(7)).timestamp() - base_timestamp, 'Weekly')
 
     if (now + timedelta(1)).month > now.month:
         # 生成月报
