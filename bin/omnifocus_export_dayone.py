@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
-import sqlite3
+import sys
 import html
+import sqlite3
 
 from pync import Notifier
 from os.path import expanduser
@@ -39,8 +40,7 @@ def generate_md(data, tag):
     return base_fmt.format(tasks=tasks, plan_summer=plan_summer)
 
 
-def export_to_dayone(md, tag):
-    now = datetime.now()
+def export_to_dayone(md, now, tag):
     uuid = '{}_{}'.format(now.strftime('%Y%m%d%H%M%S%f'), tag)
     filename = '~/Dropbox/Apps/Day One/Journal.dayone/entries/{}.doentry'
     filename = filename.format(uuid)
@@ -59,13 +59,13 @@ def export_to_dayone(md, tag):
 </plist>"""  # noqa
 
     with open(filename, 'wb') as f:
-        date_iso = now.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        date_iso = (now - timedelta(hours=8)).strftime("%Y-%m-%dT%H:%M:%SZ")
         content = base_content.format(date_iso=date_iso, md=html.escape(md),
                                       tag=tag, uuid=uuid)
         f.write(content.encode())
 
 
-def main(timestamp, tag='Daily'):
+def main(start_ts, end_ts, now, tag='Daily'):
     conn = sqlite3.connect(database_path)
     cur = conn.cursor()
 
@@ -75,6 +75,7 @@ def main(timestamp, tag='Daily'):
     where
         t.projectinfo is null and
         t.dateCompleted >= {} and
+        t.dateCompleted < {} and
         t.containingProjectInfo in (
             select projectInfo from task where projectInfo is not NULL and
                 name not like "%Ritual%" and name not like "%REVIEW%"
@@ -83,30 +84,44 @@ def main(timestamp, tag='Daily'):
 
     data = {}
 
-    for t, p in cur.execute(sql.format(timestamp)):
+    for t, p in cur.execute(sql.format(start_ts, end_ts)):
         if p not in data:
             data[p] = list()
         data[p].append(t)
 
     md = generate_md(data, tag)
 
-    export_to_dayone(md, tag)
+    export_to_dayone(md, now, tag)
 
 
 if __name__ == "__main__":
-    now = datetime.now()
+    if len(sys.argv) == 2:
+        try:
+            now = datetime.strptime(sys.argv[1], '%Y.%m.%d')
+        except ValueError:
+            print('时间串格式错误，比如: 2015.11.17')
+            sys.exit(1)
+    else:
+        now = datetime.now()
     base_timestamp = datetime(2001, 1, 1).timestamp()
     today = datetime(now.year, now.month, now.day)
+    tomorrow = today + timedelta(1)
 
     if now.weekday() == 5:
         # 生成周报
-        main((today - timedelta(6)).timestamp() - base_timestamp, 'Weekly')
+        today_timestamp = (today - timedelta(6)).timestamp() - base_timestamp
+        tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
+        main(today_timestamp, tomorrow_timestamp, now, 'Weekly')
 
     if (now + timedelta(1)).month > now.month:
         # 生成月报
-        main(today.timestamp() - base_timestamp, 'Monthly')
+        today_timestamp = (today - timedelta(30)).timestamp() - base_timestamp
+        tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
+        main(today_timestamp, tomorrow_timestamp, now, 'Monthly')
 
     # 生成日报
-    main(today.timestamp() - base_timestamp, 'Daily')
+    today_timestamp = today.timestamp() - base_timestamp
+    tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
+    main(today_timestamp, tomorrow_timestamp, now, 'Daily')
 
     Notifier.notify('Export DayOne Done.', title='Omnifocus Statistics')
