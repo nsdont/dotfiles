@@ -16,10 +16,7 @@ def generate_md(data, tag):
     project_fmt = '* {}'
     item_fmt = '  * {}'
     plan_summer = ''
-    base_fmt = """### OmniFocus
-{tasks}
-{plan_summer}
-### Life\n"""
+    base_fmt = '### OmniFocus\n{tasks}\n{plan_summer}\n### Life\n'
     tasks = []
     for project in data:
         tasks.append(project_fmt.format(project))
@@ -27,15 +24,9 @@ def generate_md(data, tag):
     tasks = '\n'.join(tasks)
 
     if tag in {'Weekly', 'Monthly'}:
-        plan_summer = """
-### Weekly Plan
-
-#### Finish Plan
-
-#### Process Plan
-
-#### Raw Plan
-"""
+        plan_summer = ('\n### {} Plan\n\n#### Finish Plan\n\n'
+                       '#### Process Plan\n\n#### Raw Plan')
+        plan_summer = plan_summer.format(tag)
 
     return base_fmt.format(tasks=tasks, plan_summer=plan_summer)
 
@@ -89,6 +80,20 @@ def main(start_ts, end_ts, now, tag='Daily'):
             data[p] = list()
         data[p].append(t)
 
+    sql = """
+    select name from task
+    where
+        projectinfo is null and
+        ininbox = 1 and
+        dateCompleted >= {} and
+        dateCompleted < {};
+    """
+    data['Inbox'] = []
+    for t, in cur.execute(sql.format(start_ts, end_ts)):
+        data['Inbox'].append(t)
+    if not len(data['Inbox']):
+        data.pop('Inbox')
+
     md = generate_md(data, tag)
 
     export_to_dayone(md, now, tag)
@@ -113,7 +118,8 @@ if __name__ == "__main__":
         tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
         main(today_timestamp, tomorrow_timestamp, now, 'Weekly')
 
-    if (now + timedelta(1)).month > now.month:
+    tomorrow = now + timedelta(days=1)
+    if tomorrow.month > now.month or (now.month == 12 and tomorrow.month == 1):
         # 生成月报
         today_timestamp = (today - timedelta(30)).timestamp() - base_timestamp
         tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
