@@ -67,6 +67,9 @@ alias mocha='mocha -R spec'
 alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
 alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
 alias vpn_start="export http_proxy='http://127.0.0.1:8118'; export https_proxy='http://127.0.0.1:8118'"
+alias git_set_proxy="git config --global http.proxy http://127.0.0.1:8118; git config --global https.proxy http://127.0.0.1:8118"
+alias git_unset_proxy="git config --global  --unset http.proxy; git config --global --unset https.proxy "
+alias charles_proxy="export http_proxy='http://127.0.0.1:8888'; export https_proxy='http://127.0.0.1:8888'"
 alias hidefile="defaults write com.apple.finder AppleShowAllFiles No && killall Finder"
 alias showfile="defaults write com.apple.finder AppleShowAllFiles Yes && killall Finder"
 alias cnpm="npm --registry=http://registry.npm.taobao.org \
@@ -140,3 +143,6 @@ bindkey '^T' autosuggest-toggle
 
 # the fuck
 eval "$(thefuck --alias)"
+
+# pyenv
+eval "$(pyenv init -)"
