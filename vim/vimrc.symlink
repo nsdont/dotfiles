@@ -20,6 +20,7 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'nvie/vim-flake8'
 Plug 'scrooloose/nerdcommenter'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'rust-lang/rust.vim'
 
 " Code to execute when the plugin is loaded on demand
 Plug 'Valloric/YouCompleteMe', { 'for': 'py', 'do': './install.py'}
