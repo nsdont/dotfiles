@@ -86,6 +86,9 @@ alias hmcl='cd ~/Game/hmcl && java -jar HMCL-2.2.8.jar'
 alias rm='trash'
 alias angrok='~/bin/angrok --config ~/bin/angrok.cfg'
 
+# git
+alias ggg="git co develop; git fetch upstream ; git merge upstream/develop;"
+
 # docker
 alias dj='docker-compose run --rm server'
 alias djs='docker-compose run --rm --service-ports server'
