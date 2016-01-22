@@ -61,8 +61,7 @@ def generate_md(data, tag):
     tasks = '\n'.join(tasks)
 
     if tag in {'Weekly', 'Monthly'}:
-        plan_summer = ('\n### {} Plan\n\n#### Finish Plan\n\n'
-                       '#### Process Plan\n\n#### Raw Plan\n')
+        plan_summer = '\n### {} Plan\n\n#### OKR Judge\n'
         plan_summer = plan_summer.format(tag)
 
     return base_fmt.format(tasks=tasks, plan_summer=plan_summer)
