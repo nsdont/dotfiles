@@ -149,3 +149,7 @@ eval "$(thefuck --alias)"
 
 # pyenv
 eval "$(pyenv init -)"
+
+# nvm
+export NVM_DIR=~/.nvm
+. $(brew --prefix nvm)/nvm.sh
