@@ -13,8 +13,8 @@ Options:
 
 """
 import sys
-import html
 import sqlite3
+import uuid
 import logging
 import logging.handlers
 
@@ -23,11 +23,21 @@ from docopt import docopt
 from os.path import expanduser
 from datetime import datetime, timedelta
 
-database_path = expanduser('~/Library/Containers/com.omnigroup.OmniFocus2/'
-                           'Data/Library/Caches/com.omnigroup.OmniFocus2/'
-                           'OmniFocusDatabase2')
+omnifocus_db_path = expanduser('~/Library/Containers/com.omnigroup.OmniFocus2/'
+                               'Data/Library/Caches/com.omnigroup.OmniFocus2/'
+                               'OmniFocusDatabase2')
+
+dayone2_db_path = expanduser('~/Library/Group Containers/5U8NS4GX82.dayoneapp2'
+                             '/Data/Documents/DayOne.sqlite')
 
 logger = logging.getLogger('omnifocus_export')
+
+tags_enum = {
+    'Daily': 1,
+    'Monthly': 2,
+    'Weekly': 3,
+    'Yearly': 4
+}
 
 
 def setup_logging():
@@ -68,32 +78,42 @@ def generate_md(data, tag):
 
 
 def export_to_dayone(md, now, tag):
-    uuid = '{}_{}'.format(now.strftime('%Y%m%d%H%M%S%f'), tag)
-    filename = '~/Dropbox/Apps/Day One/Journal.dayone/entries/{}.doentry'
-    filename = filename.format(uuid)
-    filename = expanduser(filename)
+    conn = sqlite3.connect(dayone2_db_path)
+    cur = conn.cursor()
 
-    base_content = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Creation Date</key><date>{date_iso}</date>
-    <key>Entry Text</key><string>{md}</string>
-    <key>Starred</key><false/>
-    <key>Tags</key><array><string>{tag}</string></array>
-    <key>UUID</key><string>{uuid}</string>
-</dict>
-</plist>"""  # noqa
+    start_at = datetime(2001, 1, 1)
+    timestamp = (now - start_at).total_seconds()
+    zuuid = str(uuid.uuid4().hex).upper()
+    cuuid = str(uuid.uuid4()).upper()
 
-    with open(filename, 'wb') as f:
-        date_iso = (now - timedelta(hours=8)).strftime("%Y-%m-%dT%H:%M:%SZ")
-        content = base_content.format(date_iso=date_iso, md=html.escape(md),
-                                      tag=tag, uuid=uuid)
-        f.write(content.encode())
+    sql = """
+        INSERT INTO ZENTRY (
+            Z_ENT, Z_OPT, ZSTARRED, ZJOURNAL, ZCREATIONDATE, ZMODIFIEDDATE,
+            ZCHANGEID, ZTEXT, ZUUID
+        ) VALUES (
+            2, 2, 0, 2, {}, {}, '{}', '{}', '{}');
+    """
+    cur.execute(sql.format(timestamp, timestamp, cuuid, md, zuuid))
+    conn.commit()
+
+    sql = """
+        select Z_PK from ZENTRY where ZUUID = '{}' order by ZCREATIONDATE desc;
+    """
+    ids = [i for i in cur.execute(sql.format(zuuid))]
+
+    sql = """
+        INSERT INTO Z_2TAGS (
+            Z_2ENTRIES, Z_20TAGS
+        ) VALUES ('{}', '{}');
+    """
+
+    conn.execute(sql.format(ids[0][0], tags_enum[tag]))
+    conn.commit()
+    conn.close()
 
 
 def do(start_ts, end_ts, now, tag='Daily', only_show=False):
-    conn = sqlite3.connect(database_path)
+    conn = sqlite3.connect(omnifocus_db_path)
     cur = conn.cursor()
 
     sql = """
@@ -146,7 +166,7 @@ def main(args):
             print('时间串格式错误，比如: 2015.11.17')
             sys.exit(1)
     else:
-        now = datetime.now()
+        now = datetime.utcnow()
     only_show = args['--show']
     base_timestamp = datetime(2001, 1, 1).timestamp()
     today = datetime(now.year, now.month, now.day)
