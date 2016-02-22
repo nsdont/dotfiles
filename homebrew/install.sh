@@ -26,6 +26,7 @@ binaries=(
   goaccess
   graphviz
   htop-osx
+  imgcat
   redis
   jpeg
   libevent
@@ -128,6 +129,8 @@ brew install bash
 brew tap caskroom/fonts
 brew tap caskroom/versions
 brew install caskroom/cask/brew-cask
+
+brew tap eddieantonio/eddieantonio
 
 echo "Installing binaries..."
 brew install ${binaries[@]}
