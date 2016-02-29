@@ -62,6 +62,7 @@ alias -s bz2='tar -xjvf'
 
 #alias fab='fab -f ~/fabfile.py'
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
 alias grep="grep --color=auto"
 alias mocha='mocha -R spec'
 alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
