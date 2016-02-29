@@ -145,6 +145,10 @@ zle -N zle-line-init
 # zsh-autosuggestions is designed to be unobtrusive)
 bindkey '^T' autosuggest-toggle
 
+# cheat
+export DEFAULT_CHEAT_DIR="$HOME/.dotfiles/cheat"
+export CHEATCOLORS=true
+
 # the fuck
 eval "$(thefuck --alias)"
 
