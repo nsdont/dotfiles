@@ -42,6 +42,7 @@ binaries=(
   macvim
   mackup
   mysql
+  mono
   nginx
   nmap
   node

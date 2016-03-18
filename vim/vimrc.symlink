@@ -11,7 +11,8 @@ Plug 'wakatime/vim-wakatime'
 Plug 'easymotion/vim-easymotion'
 Plug 'majutsushi/tagbar'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -21,10 +22,11 @@ Plug 'nvie/vim-flake8'
 Plug 'scrooloose/nerdcommenter'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'rust-lang/rust.vim'
+Plug 'davidhalter/jedi'
 
 " Code to execute when the plugin is loaded on demand
 Plug 'Valloric/YouCompleteMe', { 'for': 'py', 'do': './install.py'}
-autocmd! User YouCompleteMe call youcompleteme#Enable()
+autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
 
 " Theme
 Plug 'altercation/vim-colors-solarized'
@@ -209,9 +211,10 @@ nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
 " nnoremap <leader>lc :lclose<CR>	"close locationlist
 inoremap <leader><leader> <C-x><C-o>
 
-let g:ycm_global_ycm_extra_conf = '~/.vim/data/ycm/.ycm_extra_conf.py'
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
+"let g:ycm_global_ycm_extra_conf = '~/.vim/data/ycm/.ycm_extra_conf.py'
 " 不显示开启vim时检查ycm_extra_conf文件的信息
-let g:ycm_confirm_extra_conf=0
+let g:ycm_confirm_extra_conf=1
 " 开启基于tag的补全，可以在这之后添加需要的标签路径
 let g:ycm_collect_identifiers_from_tags_files=1
 "注释和字符串中的文字也会被收入补全
@@ -307,3 +310,16 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => markdown preview
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!/usr/bin/open -a "/Applications/Google Chrome.app" "%:p"<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => syntastic
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"syntastic检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查,
+"我们采取其它方案来进行检查
+let g:syntastic_ignore_files=[".*\.py$"]

@@ -158,3 +158,6 @@ eval "$(pyenv init -)"
 # nvm
 export NVM_DIR=~/.nvm
 . $(brew --prefix nvm)/nvm.sh
+
+# CMAKE
+export CMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.5.1_2/lib/cmake:$CMAKE_PREFIX_PATH
