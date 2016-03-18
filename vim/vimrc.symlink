@@ -2,47 +2,46 @@
 """ 插件安装配置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" vim plugin
-call plug#begin('~/.vim/plugged')
+" 关闭兼容模式
+set nocompatible
+filetype off
 
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'wakatime/vim-wakatime'
-Plug 'easymotion/vim-easymotion'
-Plug 'majutsushi/tagbar'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'scrooloose/syntastic'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'dyng/ctrlsf.vim'
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'nvie/vim-flake8'
-Plug 'scrooloose/nerdcommenter'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'rust-lang/rust.vim'
-Plug 'davidhalter/jedi'
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" Code to execute when the plugin is loaded on demand
-Plug 'Valloric/YouCompleteMe', { 'for': 'py', 'do': './install.py'}
-autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'majutsushi/tagbar'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'rust-lang/rust.vim'
+Plugin 'davidhalter/jedi'
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips' 
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'Valloric/YouCompleteMe'
 
-" Theme
-Plug 'altercation/vim-colors-solarized'
-
-" Group dependencies, vim-snippets depends on ultisnips
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-
-" Add plugins to &runtimepath
-call plug#end()
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ 基础配置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " 自适应不同语言的智能缩进
-filetype indent on
+filetype plugin indent on
 " 将制表符扩展为空格
 set expandtab
 set noswapfile
@@ -58,8 +57,6 @@ set backspace=2 " make backspace work like most other apps
 set incsearch
 " 搜索时大小写不敏感
 set ignorecase
-" 关闭兼容模式
-set nocompatible
 " vim 自身命令行模式智能补全
 set wildmenu
 " 关闭滚动条
