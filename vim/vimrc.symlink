@@ -27,7 +27,7 @@ Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rust-lang/rust.vim'
-Plugin 'davidhalter/jedi'
+"Plugin 'davidhalter/jedi'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips' 
 Plugin 'altercation/vim-colors-solarized'
@@ -315,8 +315,16 @@ autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!/
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => syntastic
+" Change Log
+" 2016.03.30 启用 Python 检测
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "syntastic检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查,
 "我们采取其它方案来进行检查
-let g:syntastic_ignore_files=[".*\.py$"]
+"let g:syntastic_ignore_files=[".*\.py$"]
+let g:syntastic_python_checkers = ['pylint']
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => wakatime
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:wakatime_PythonBinary = '/usr/local/bin/python2'
