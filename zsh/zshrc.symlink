@@ -79,7 +79,7 @@ alias cnpm="npm --registry=http://registry.npm.taobao.org \
     --userconfig=$HOME/.cnpmrc"
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 alias gfb='git fetch && git rebase -i origin/develop'
-alias ufab="fab -f ~/bin/fabfile.py"
+alias ufab="fab -f ~/Documents/Company/fabfile/fabfile"
 alias http_track="export http_proxy=http://127.0.0.1:9396"
 
 alias pip_upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
