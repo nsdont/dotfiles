@@ -18,12 +18,13 @@ Plugin 'majutsushi/tagbar'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'klen/python-mode'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'nvie/vim-flake8'
+"Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rust-lang/rust.vim'
@@ -277,8 +278,8 @@ nmap <c-c> <Plug>CtrlSFPrompt
 """"""""""""""""""""""""""""""
 " => vim-flake8
 """"""""""""""""""""""""""""""
-let g:flake8_cmd="/usr/local/bin/flake8"
-autocmd BufWritePost *.py call Flake8()
+"let g:flake8_cmd="/usr/local/bin/flake8"
+"autocmd BufWritePost *.py call Flake8()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-airline config (force color)
@@ -323,6 +324,39 @@ autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!/
 "我们采取其它方案来进行检查
 "let g:syntastic_ignore_files=[".*\.py$"]
 let g:syntastic_python_checkers = ['pylint']
+"let g:syntastic_python_pylint_args=" ${default_args}"
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => python_mode
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pymode = 1
+let g:pymode_options = 1
+let g:pymode_rope = 0
+
+let g:pymode_lint = 1
+let g:pymode_lint_checkers = ['pylint']
+let g:pymode_virtualenv = 1
+
+" Enable breakpoints plugin
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_bind = '<leader>b'
+
+" syntax highlighting
+"let g:pymode_syntax = 1
+"let g:pymode_syntax_all = 1
+"let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+"let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+" Don't autofold code
+let g:pymode_folding = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => wakatime

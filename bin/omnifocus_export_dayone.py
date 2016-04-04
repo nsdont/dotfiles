@@ -18,21 +18,21 @@ import uuid
 import logging
 import logging.handlers
 
-from pync import Notifier
-from docopt import docopt
 from os.path import expanduser
 from datetime import datetime, timedelta
+from pync import Notifier
+from docopt import docopt
 
-omnifocus_db_path = expanduser('~/Library/Containers/com.omnigroup.OmniFocus2/'
+OMNIFOCUS_DB_PATH = expanduser('~/Library/Containers/com.omnigroup.OmniFocus2/'
                                'Data/Library/Caches/com.omnigroup.OmniFocus2/'
                                'OmniFocusDatabase2')
 
-dayone2_db_path = expanduser('~/Library/Group Containers/5U8NS4GX82.dayoneapp2'
+DAYONE2_DB_PATH = expanduser('~/Library/Group Containers/5U8NS4GX82.dayoneapp2'
                              '/Data/Documents/DayOne.sqlite')
 
-logger = logging.getLogger('omnifocus_export')
+LOG = logging.getLogger('omnifocus_export')
 
-tags_enum = {
+TAGS_ENUM = {
     'Daily': 1,
     'Monthly': 2,
     'Weekly': 3,
@@ -41,44 +41,47 @@ tags_enum = {
 
 
 def setup_logging():
-    LOG_FILE = '/tmp/omnifocus_export.log'
+    """ 设置日志 """
+    log_file = '/tmp/omnifocus_export.log'
     fmt = '%(asctime)s - %(message)s'
     formatter = logging.Formatter(fmt)
 
     handler = logging.handlers.RotatingFileHandler(
-        LOG_FILE, maxBytes=1024 * 1024, backupCount=5)
+        log_file, maxBytes=1024 * 1024, backupCount=5)
     handler.setFormatter(formatter)
     handler.setLevel(logging.DEBUG)
-    logger.addHandler(handler)
+    LOG.addHandler(handler)
 
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
     console_handler.setLevel(logging.DEBUG)
-    logger.addHandler(console_handler)
+    LOG.addHandler(console_handler)
 
-    logger.setLevel(logging.DEBUG)
+    LOG.setLevel(logging.DEBUG)
 
 
 def generate_md(data, tag):
+    """ 生成具体 markdown  """
     project_fmt = '* {}'
     item_fmt = '  * {}'
     plan_summer = ''
-    base_fmt = '### OmniFocus\n{tasks}\n{plan_summer}\n### Life\n'
+    base_fmt = '### OmniFocus\n{tasks_content}\n{plan_summer}\n### Life\n'
     tasks = []
     for project in data:
         tasks.append(project_fmt.format(project))
         tasks.extend([item_fmt.format(i) for i in data[project]])
-    tasks = '\n'.join(tasks)
+    tasks_content = '\n'.join(tasks)
 
     if tag in {'Weekly', 'Monthly'}:
         plan_summer = '\n### {} Plan\n\n#### OKR Judge\n'
         plan_summer = plan_summer.format(tag)
 
-    return base_fmt.format(tasks=tasks, plan_summer=plan_summer)
+    return base_fmt.format(tasks_content=tasks_content, plan_summer=plan_summer)
 
 
-def export_to_dayone(md, now, tag):
-    conn = sqlite3.connect(dayone2_db_path)
+def export_to_dayone(md_content, now, tag):
+    """ 将文件写入到 dayone 的数据库 """
+    conn = sqlite3.connect(DAYONE2_DB_PATH)
     cur = conn.cursor()
 
     start_at = datetime(2001, 1, 1)
@@ -93,7 +96,7 @@ def export_to_dayone(md, now, tag):
         ) VALUES (
             2, 2, 0, 2, {}, {}, '{}', '{}', '{}');
     """
-    cur.execute(sql.format(timestamp, timestamp, cuuid, md, zuuid))
+    cur.execute(sql.format(timestamp, timestamp, cuuid, md_content, zuuid))
     conn.commit()
 
     sql = """
@@ -107,13 +110,14 @@ def export_to_dayone(md, now, tag):
         ) VALUES ('{}', '{}');
     """
 
-    conn.execute(sql.format(ids[0][0], tags_enum[tag]))
+    conn.execute(sql.format(ids[0][0], TAGS_ENUM[tag]))
     conn.commit()
     conn.close()
 
 
-def do(start_ts, end_ts, now, tag='Daily', only_show=False):
-    conn = sqlite3.connect(omnifocus_db_path)
+def query_and_export_data(start_ts, end_ts, now, tag='Daily', only_show=False):
+    """ 读取数据库 """
+    conn = sqlite3.connect(OMNIFOCUS_DB_PATH)
     cur = conn.cursor()
 
     sql = """
@@ -131,10 +135,10 @@ def do(start_ts, end_ts, now, tag='Daily', only_show=False):
 
     data = {}
 
-    for t, p in cur.execute(sql.format(start_ts, end_ts)):
-        if p not in data:
-            data[p] = list()
-        data[p].append(t)
+    for title, project in cur.execute(sql.format(start_ts, end_ts)):
+        if project not in data:
+            data[project] = list()
+        data[project].append(title)
 
     sql = """
     select name from task
@@ -145,20 +149,21 @@ def do(start_ts, end_ts, now, tag='Daily', only_show=False):
         dateCompleted < {};
     """
     data['Inbox'] = []
-    for t, in cur.execute(sql.format(start_ts, end_ts)):
-        data['Inbox'].append(t)
+    for title, in cur.execute(sql.format(start_ts, end_ts)):
+        data['Inbox'].append(title)
     if not len(data['Inbox']):
         data.pop('Inbox')
 
-    md = generate_md(data, tag)
+    md_content = generate_md(data, tag)
 
     if only_show:
-        print(md)
+        print(md_content)
     else:
-        export_to_dayone(md, now, tag)
+        export_to_dayone(md_content, now, tag)
 
 
 def main(args):
+    """ 启动入口 """
     if args['<date>']:
         try:
             now = datetime.strptime(args['<date>'], '%Y.%m.%d')
@@ -174,29 +179,30 @@ def main(args):
 
     if now.weekday() == 5:
         # 生成周报
-        logger.info('Start generate weekly...')
+        LOG.info('Start generate weekly...')
         today_timestamp = (today - timedelta(6)).timestamp() - base_timestamp
         tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
-        do(today_timestamp, tomorrow_timestamp, now, 'Weekly',
-            only_show=only_show)
-        logger.info('Finish generate weekly...')
+        query_and_export_data(today_timestamp, tomorrow_timestamp, now, 'Weekly',
+                              only_show=only_show)
+        LOG.info('Finish generate weekly...')
 
     tomorrow = now + timedelta(days=1)
     if tomorrow.month > now.month or (now.month == 12 and tomorrow.month == 1):
         # 生成月报
-        logger.info('Start generate monthly...')
+        LOG.info('Start generate monthly...')
         today_timestamp = (today - timedelta(30)).timestamp() - base_timestamp
         tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
-        do(today_timestamp, tomorrow_timestamp, now, 'Monthly',
-           only_show=only_show)
-        logger.info('Finish generate monthly...')
+        query_and_export_data(today_timestamp, tomorrow_timestamp, now,
+                              'Monthly', only_show=only_show)
+        LOG.info('Finish generate monthly...')
 
     # 生成日报
-    logger.info('Start generate daily...')
+    LOG.info('Start generate daily...')
     today_timestamp = today.timestamp() - base_timestamp
     tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
-    do(today_timestamp, tomorrow_timestamp, now, 'Daily', only_show=only_show)
-    logger.info('Finish generate daily...')
+    query_and_export_data(today_timestamp, tomorrow_timestamp, now, 'Daily',
+                          only_show=only_show)
+    LOG.info('Finish generate daily...')
 
     if not only_show:
         Notifier.notify('Export DayOne Done.', title='Omnifocus Statistics')
@@ -204,8 +210,7 @@ def main(args):
 
 if __name__ == '__main__':
     setup_logging()
-    arguments = docopt(__doc__, version='0.1.1')
 
-    logger.info('--------START------')
-    main(arguments)
-    logger.info('--------END--------')
+    LOG.info('--------START------')
+    main(docopt(__doc__, version='0.1.1'))
+    LOG.info('--------END--------')

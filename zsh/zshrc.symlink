@@ -154,6 +154,7 @@ eval "$(thefuck --alias)"
 
 # pyenv
 eval "$(pyenv init -)"
+export PYENV_ROOT=/usr/local/var/pyenv
 
 # nvm
 export NVM_DIR=~/.nvm
