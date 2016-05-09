@@ -88,7 +88,8 @@ alias rm='trash'
 alias angrok='~/bin/angrok --config ~/bin/angrok.cfg'
 
 # git
-alias ggg="git co develop; git fetch upstream ; git merge upstream/develop;"
+alias gg="git fetch upstream ; git merge upstream/`git rev-parse --abbrev-ref HEAD`;"
+alias ggg="git co develop; gg;"
 
 # docker
 alias dj='docker-compose run --rm server'
