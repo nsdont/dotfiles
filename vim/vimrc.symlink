@@ -24,7 +24,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'ekalinin/Dockerfile.vim'
-"Plugin 'nvie/vim-flake8'
+Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rust-lang/rust.vim'
@@ -107,6 +107,9 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" Fast compile and run
+nmap <leader>gr :!clear;gcc -g % && ./a.out < std_input<cr>
+
 " 与外部共享剪切板
 set clipboard=unnamed
 
@@ -171,7 +174,7 @@ let g:EasyMotion_smartcase = 1
 " => Nerd Tree
 """"""""""""""""""""""""""""""
 let g:NERDTreeWinPos = "left"
-let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeIgnore = ['\.pyc$', '__pycache__$[[dir]]']
 let g:NERDTreeWinSize = 25
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark 
@@ -264,7 +267,7 @@ let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$',
+  \ 'dir':  '\v[\/](node_modules|target|dist|py_env-default|media|staticfiles)|(\.(swp|ico|git|svn))$',
   \ 'file': '\v\.(exe|so|dll)|pyc$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
@@ -278,8 +281,8 @@ nmap <c-c> <Plug>CtrlSFPrompt
 """"""""""""""""""""""""""""""
 " => vim-flake8
 """"""""""""""""""""""""""""""
-"let g:flake8_cmd="/usr/local/bin/flake8"
-"autocmd BufWritePost *.py call Flake8()
+let g:flake8_cmd="/usr/local/bin/flake8"
+autocmd BufWritePost *.py call Flake8()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-airline config (force color)
@@ -317,11 +320,13 @@ autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => syntastic
 " Change Log
+" 2016.04.13 设置默认不启用 Syntastic, 设置 <leader>c 做手动检查
 " 2016.03.30 启用 Python 检测
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "syntastic检查Python会在保存时有很长时间的卡顿, 所以禁用它对Python文件的检查,
 "我们采取其它方案来进行检查
+let g:syntastic_html_checkers = []
 "let g:syntastic_ignore_files=[".*\.py$"]
 let g:syntastic_python_checkers = ['pylint']
 "let g:syntastic_python_pylint_args=" ${default_args}"
@@ -333,6 +338,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
+
+nmap <leader>c :SyntasticCheck<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => python_mode
@@ -341,8 +349,9 @@ let g:pymode = 1
 let g:pymode_options = 1
 let g:pymode_rope = 0
 
-let g:pymode_lint = 1
-let g:pymode_lint_checkers = ['pylint']
+let g:pymode_lint = 0
+let g:pymode_lint_checkers = ['flake8']
+
 let g:pymode_virtualenv = 1
 
 " Enable breakpoints plugin
