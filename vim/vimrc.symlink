@@ -22,6 +22,7 @@ Plugin 'klen/python-mode'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'dyng/ctrlsf.vim'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'nvie/vim-flake8'
@@ -181,6 +182,23 @@ map <leader>nb :NERDTreeFromBookmark
 map <leader>nf :NERDTreeFind<cr>
 map <F2> <leader>nn
 map <F3> <leader>nf
+" 在终端启动vim时，共享NERDTree
+"let g:nerdtree_tabs_open_on_console_startup=1
+" 显示行号
+let NERDTreeShowLineNumbers=1
+let NERDTreeAutoCenter=1
+let g:nerdtree_tabs_open_on_gui_startup=0
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 """"""""""""""""""""""""""""""
 " => TagBar
