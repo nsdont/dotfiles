@@ -6,3 +6,5 @@ fabfile.py
 .tags_sorted_by_file
 .tags
 .env
+
+_开发文档/
