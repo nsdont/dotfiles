@@ -33,7 +33,9 @@ Plugin 'rust-lang/rust.vim'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips' 
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/MatchTagAlways'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -73,6 +75,8 @@ set laststatus=2
 set ruler
 " 开启行号显示
 set number
+" 开启相对行号
+set relativenumber
 " 高亮显示当前行/列
 set cursorline
 set cursorcolumn
@@ -82,7 +86,17 @@ set hlsearch
 "set fdm=syntax
 set fdm=indent
 " 启动 vim 时关闭折叠代码
-set nofoldenable
+" set nofoldenable
+" 临时启动 vim 时开启折叠代码
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+nnoremap <space> za
+set foldmethod=indent
+" 在底部显示 命令
+set showcmd
+" 惰性绘制 
+set lazyredraw
 
 " Font
 if has("gui_running")
@@ -117,9 +131,12 @@ set clipboard=unnamed
 " Theme配置
 syntax enable
 syntax on
-set background=light
-let g:solarized_termcolors=256
-colorscheme solarized
+"set background=light
+"let g:solarized_termcolors=256
+"colorscheme solarized
+colorscheme molokai
+let g:molokai_original=1
+let g:rehash256=1
 
 if has("gui_running")
     set guioptions-=T
@@ -143,6 +160,13 @@ autocmd BufWritePre *.py :%s/\s\+$//e
 map <F12> :so $MYVIMRC<CR>
 " 取消当前搜索高亮
 map <Leader><CR> :noh<CR>
+
+"" Yank text to the OS X clipboard
+"noremap <leader>y "*y
+"noremap <leader>yy "*Y
+
+"" Preserve indentation while pasting text from the OS X clipboard
+"noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ 插件配置
@@ -281,8 +305,12 @@ let g:ycm_seed_identifiers_with_syntax=1
 """"""""""""""""""""""""""""""
 " => ctrlp.vim
 """"""""""""""""""""""""""""""
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+"let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](node_modules|target|dist|py_env-default|media|staticfiles)|(\.(swp|ico|git|svn))$',
@@ -333,7 +361,7 @@ let g:UltiSnipsEditSplit="vertical"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => markdown preview
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!/usr/bin/open -a "/Applications/Google Chrome.app" "%:p"<CR>
+autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>pv :!/usr/bin/open -a "/Applications/Google Chrome.app" "%:p"<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => syntastic
