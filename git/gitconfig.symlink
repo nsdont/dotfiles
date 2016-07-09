@@ -2,6 +2,8 @@
 	name = NSDont
 	email = haodewanan@gmail.com
 [alias]
+  logg = log --left-right --graph --format=\"%C(auto)%d %h%Creset% s %C(68)%ar %C(ul 117)%aN|%cN%Creset\"
+  logga = log --all --left-right --graph --format=\"%C(auto)%d %h%Creset% s %C(68)%ar %C(ul 117)%aN|%cN%Creset\"
   st = status
   co = checkout
   br = branch
@@ -23,6 +25,8 @@
 [core]
   excludesfile = ~/.gitignore_global
   editor = vim
+  autocrlf = input
+  safecrlf = false
 [init]
   templatedir = ~/.git-templates
 [mergetool]
@@ -36,10 +40,33 @@
   # for more information on different options of the below setting.
   #
   # Setting to git 2.0 default to surpress warning message
-  default = simple
+  default = current
+[pull]
+    rebae = true
+[rerere]
+    enabled = true
+[rebase]
+    stat = true
+    autoSquash = true
+[merge]
+    log = true
+    ff = false
+[i18n]
+    commitencoding = utf-8
+    logoutputencoding = utf-8
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[filter "lfs"]
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
+;[http]
+;   proxy = socks5://127.0.0.1:1080
+;[https]
+;   proxy = socks5://127.0.0.1:1080
+[status]
+    submoduleSummary = true
