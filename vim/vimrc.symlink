@@ -34,8 +34,9 @@ Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips' 
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/MatchTagAlways'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'marijnh/tern_for_vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
