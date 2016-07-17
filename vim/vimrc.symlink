@@ -201,9 +201,11 @@ let g:EasyMotion_smartcase = 1
 let g:NERDTreeWinPos = "left"
 let NERDTreeIgnore = ['\.pyc$', '__pycache__$[[dir]]']
 let g:NERDTreeWinSize = 25
-map <leader>nn :NERDTreeToggle<cr>
+"map <leader>nn :NERDTreeToggle<cr>
+map <leader>nn :NERDTreeTabsToggle<cr>
 map <leader>nb :NERDTreeFromBookmark 
-map <leader>nf :NERDTreeFind<cr>
+"map <leader>nf :NERDTreeFind<cr>
+map <leader>nf :NERDTreeTabsFind<cr>
 map <F2> <leader>nn
 map <F3> <leader>nf
 " 在终端启动vim时，共享NERDTree
@@ -211,7 +213,7 @@ map <F3> <leader>nf
 " 显示行号
 let NERDTreeShowLineNumbers=1
 let NERDTreeAutoCenter=1
-let g:nerdtree_tabs_open_on_gui_startup=0
+let g:nerdtree_tabs_open_on_gui_startup=1
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
