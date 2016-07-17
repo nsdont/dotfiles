@@ -76,7 +76,8 @@ def generate_md(data, tag):
         plan_summer = '\n### {} Plan\n\n#### OKR Judge\n'
         plan_summer = plan_summer.format(tag)
 
-    return base_fmt.format(tasks_content=tasks_content, plan_summer=plan_summer)
+    return base_fmt.format(tasks_content=tasks_content,
+                           plan_summer=plan_summer)
 
 
 def export_to_dayone(md_content, now, tag):
@@ -177,13 +178,13 @@ def main(args):
     today = datetime(now.year, now.month, now.day)
     tomorrow = today + timedelta(1)
 
-    if now.weekday() == 5:
+    if now.weekday() == 6:
         # 生成周报
         LOG.info('Start generate weekly...')
         today_timestamp = (today - timedelta(6)).timestamp() - base_timestamp
         tomorrow_timestamp = tomorrow.timestamp() - base_timestamp
-        query_and_export_data(today_timestamp, tomorrow_timestamp, now, 'Weekly',
-                              only_show=only_show)
+        query_and_export_data(today_timestamp, tomorrow_timestamp, now,
+                              'Weekly', only_show=only_show)
         LOG.info('Finish generate weekly...')
 
     tomorrow = now + timedelta(days=1)
@@ -212,5 +213,5 @@ if __name__ == '__main__':
     setup_logging()
 
     LOG.info('--------START------')
-    main(docopt(__doc__, version='0.1.1'))
+    main(docopt(__doc__, version='0.1.2'))
     LOG.info('--------END--------')
