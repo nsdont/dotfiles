@@ -11,3 +11,5 @@ $HOME/.dotfiles/homebrew/install.sh
 # Set OS X defaults
 $HOME/.dotfiles/osx/set-defaults.sh
 
+# Other install
+$HOME/.dotfiles/script/install_other_package.sh
