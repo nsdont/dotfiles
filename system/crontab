@@ -1,3 +1,1 @@
 0,15 * * * * /Users/NSDont/.dotfiles/bin/omnifocus_jgy_rm_tmp.py
-*/1555555555 * * * * /Users/NSDont/Documents/Company/yicaixun/scripts/capture_data_pic.py
-0 22 * * * /Users/NSDont/.dotfiles/bin/omnifocus_export_dayone.py 1> /tmp/omnifocus_export.std.log 2> /tmp/omnifocus_export.err.log
