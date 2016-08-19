@@ -124,18 +124,7 @@ echo "================================================"
 echo
 
 # Setup zsh-autosuggestions
-source ~/.dotfiles/lib/zsh-autosuggestions/autosuggestions.zsh
-
-# Enable autosuggestions automatically
-zle-line-init() {
-    zle autosuggest-start
-}
-
-zle -N zle-line-init
-
-# use ctrl+t to toggle autosuggestions(hopefully this wont be needed as
-# zsh-autosuggestions is designed to be unobtrusive)
-bindkey '^T' autosuggest-toggle
+source ~/.dotfiles/lib/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # cheat
 export DEFAULT_CHEAT_DIR="$HOME/.dotfiles/cheat"
@@ -157,3 +146,6 @@ export CMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.5.1_2/lib/cmake:$CMAKE_PREFIX_P
 
 # auto start vpn
 vpn_start
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

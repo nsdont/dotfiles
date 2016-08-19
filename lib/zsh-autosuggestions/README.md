@@ -4,139 +4,152 @@ _[Fish](http://fishshell.com/)-like fast/unobtrusive autosuggestions for zsh._
 
 It suggests commands as you type, based on command history.
 
+<a href="https://asciinema.org/a/37390" target="_blank"><img src="https://asciinema.org/a/37390.png" width="400" /></a>
+
 
 ## Installation
 
-If you already use [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) plugin, then make sure to be loaded **before** zsh-autosuggestions.
+### Manual
 
-Note: _.zshrc_ is a file that contains user-specific ZSH configuration.
-ZSH assumes this file in your home directory (i.e. `~/.zshrc`), but the location can be changed using `ZDOTDIR` variable.
-
-### Using zgen
-
-[Zgen](https://github.com/tarjoilija/zgen) is a simple and fast plugin manager for ZSH.
-If you don’t use zgen, then use instructions for the manual installation.
-
-1. Load `tarruda/zsh-autosuggestions` and `jimmijj/zsh-syntax-highlighting` using zgen in your .zshrc file, for example:
+1. Clone this repository somewhere on your machine. This guide will assume `~/.zsh/zsh-autosuggestions`.
 
     ```sh
-    if ! zgen saved; then
-        echo "Creating a zgen save"
-
-        zgen load jimmijj/zsh-syntax-highlighting
-
-        # autosuggestions should be loaded last
-        zgen load tarruda/zsh-autosuggestions
-
-        zgen save
-    fi
+    git clone git://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
     ```
 
-2. Enable zsh-autosuggestions; copy the following snippet and put it after the zgen config section in your .zshrc file:
+2. Add the following to your `.zshrc`:
 
     ```sh
-    # Enable autosuggestions automatically.
-    zle-line-init() {
-        zle autosuggest-start
-    }
-    zle -N zle-line-init
+    source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
     ```
 
-3. Run `zgen reset` and reopen your terminal.
+3. Start a new terminal session.
 
 
-### Manually
+### Oh My Zsh
 
-1. Clone this repository to `~/.zsh/zsh-autosuggestions` (or anywhere else):
+1. Clone this repository into `$ZSH_CUSTOM/plugins` (by default `~/.oh-my-zsh/custom/plugins`)
 
     ```sh
-    git clone git://github.com/tarruda/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+    git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
     ```
 
-2. Clone zsh-syntax-highlighting repository to `~/.zsh/zsh-syntax-highlighting` (or anywhere else):
+2. Add the plugin to the list of plugins for Oh My Zsh to load:
 
     ```sh
-    git clone git://github.com/jimmijj/zsh-syntax-highlighting ~/.zsh/zsh-syntax-highlighting
+    plugins=(zsh-autosuggestions)
     ```
 
-3. Load and enable autosuggestions; copy the following snippet and put it to your .zshrc file:
-
-    ```sh
-    # Load zsh-syntax-highlighting.
-    source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-    # Load zsh-autosuggestions.
-    source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
-
-    # Enable autosuggestions automatically.
-    zle-line-init() {
-        zle autosuggest-start
-    }
-    zle -N zle-line-init
-    ```
-
-4. Reopen your terminal.
+3. Start a new terminal session.
 
 
-## Uninstallation
+## Usage
 
-Just remove the config lines from .zshrc that you’ve added during “installation.”
-If you don’t use zgen, then also delete `~/.zsh/zsh-autosuggestions` and `~/.zsh/zsh-syntax-highlighting`.
+As you type commands, you will see a completion offered after the cursor in a muted gray color. This color can be changed by setting the `ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE` variable. See [configuration](#configuration).
 
+If you press the <kbd>→</kbd> key (`forward-char` widget) or <kbd>End</kbd> (`end-of-line` widget) with the cursor at the end of the buffer, it will accept the suggestion, replacing the contents of the command line buffer with the suggestion.
 
-## How to use
-
-As you type commands, you will see a completion offered after the cursor, in a muted gray color (which can be changed, see [Configuration](#configuration)).
-To accept the autosuggestion (replacing the command line contents), hit <kbd>End</kbd>, <kbd>Alt+F</kbd>, <kbd>Ctrl+F</kbd>, or any other key that moves the cursor to the right.
-If the autosuggestion is not what you want, just ignore it: it won’t execute unless you accept it.
-
-Any widget that moves the cursor to the right (forward-word, forward-char, end-of-line…) will accept parts of the suggested text.
-For example, vi-mode users can do this:
-
-```sh
-# Accept suggestions without leaving insert mode
-bindkey '^f' vi-forward-word
-# or
-bindkey '^f' vi-forward-blank-word
-```
-
-You can also use right arrow key to accept the suggested text as in Fish shell; see [Configuration](#configuration) section to enable it.
-
-### Exposed widgets
-
-This plugin defines some ZLE widgets (think about them as functions) which you can bind to some key using [bindkey](http://zshwiki.org/home/zle/bindkeys).
-For example, to toggle autosuggestions using <kbd>Ctrl+T</kbd> add this to your .zshrc:
-
-```sh
-bindkey '^T' autosuggest-toggle
-```
-
-List of widgets:
-
- - `autosuggest-toggle` – disable/enable autosuggestions.
- - `autosuggest-execute-suggestion` – accept the suggestion and execute it.
+If you invoke the `forward-word` widget, it will partially accept the suggestion up to the point that the cursor moves to.
 
 
 ## Configuration
 
-You may override default global config variables after plugin load, i.e. put it to your .zshrc after the code that loads plugins.
+You may want to override the default global config variables after sourcing the plugin. Default values of these variables can be found [here](src/config.zsh).
 
-- `AUTOSUGGESTION_HIGHLIGHT_COLOR` – suggestion highlight color, default is `'fg=8'`.
-- `AUTOSUGGESTION_HIGHLIGHT_CURSOR` – highlight word after cursor, or not. Must be integer value `1` or `0`, default is `1`.
-- `AUTOSUGGESTION_ACCEPT_RIGHT_ARROW` – complete entire suggestion with right arrow. Must be integer value `1` or `0`, default is `0` (right arrow completes one letter at a time).
+**Note:** If you are using Oh My Zsh, you can put this configuration in a file in the `$ZSH_CUSTOM` directory. See their comments on [overriding internals](https://github.com/robbyrussell/oh-my-zsh/wiki/Customization#overriding-internals).
 
 
-## Known Issues
+### Suggestion Highlight Style
 
-> When I hit <kbd>Tab</kbd> and autosuggestions is enabled, it deletes the previous line, and scrolls up the terminal.
+Set `ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE` to configure the style that the suggestion is shown with. The default is `fg=8`.
 
-This usually happens when autosuggestions is used along with something like [“completion waiting dots.”](http://michael.thegrebs.com/2012/09/04/zsh-completion-waiting-dots/)
-Check which widget is bind to the Tab key; run `bindkey "^I"`.
-If it prints something other than `"^I" expand-or-complete`, then this may be the problem.
 
-If you use [Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh), then make sure that the variable `COMPLETION_WAITING_DOTS` is not set (it enables [this](https://github.com/robbyrussell/oh-my-zsh/blob/e55c715508a2f652fed741f2047c66dda2c6e5b0/lib/completion.zsh#L56-L64) problematic code).
+### Suggestion Strategy
 
-If you use module [editor](https://github.com/sorin-ionescu/prezto/tree/master/modules/editor) from [Prezto](https://github.com/sorin-ionescu/prezto), then you must comment out [these lines](https://github.com/sorin-ionescu/prezto/blob/a84ac5b0023d71c98bb28a68c550dc13f6c51945/modules/editor/init.zsh#L303-L304).
+Set `ZSH_AUTOSUGGEST_STRATEGY` to choose the strategy for generating suggestions. There are currently two to choose from:
+
+- `default`: Chooses the most recent match.
+- `match_prev_cmd`: Chooses the most recent match whose preceding history item matches the most recently executed command ([more info](src/strategies/match_prev_cmd.zsh)).
+
+
+### Widget Mapping
+
+This plugin works by triggering custom behavior when certain [zle widgets](http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Zle-Widgets) are invoked. You can add and remove widgets from these arrays to change the behavior of this plugin:
+
+- `ZSH_AUTOSUGGEST_CLEAR_WIDGETS`: Widgets in this array will clear the suggestion when invoked.
+- `ZSH_AUTOSUGGEST_ACCEPT_WIDGETS`: Widgets in this array will accept the suggestion when invoked.
+- `ZSH_AUTOSUGGEST_EXECUTE_WIDGETS`: Widgets in this array will execute the suggestion when invoked.
+- `ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS`: Widgets in this array will partially accept the suggestion when invoked.
+
+Widgets not in any of these lists will update the suggestion when invoked.
+
+**Note:** A widget shouldn't belong to more than one of the above arrays.
+
+
+### Key Bindings
+
+This plugin provides three widgets that you can use with `bindkey`:
+
+1. `autosuggest-accept`: Accepts the current suggestion.
+2. `autosuggest-execute`: Accepts and executes the current suggestion.
+3. `autosuggest-clear`: Clears the current suggestion.
+
+For example, this would bind <kbd>ctrl</kbd> + <kbd>space</kbd> to accept the current suggestion.
+
+```sh
+bindkey '^ ' autosuggest-accept
+```
+
+
+## Troubleshooting
+
+If you have a problem, please search through [the list of issues on GitHub](https://github.com/zsh-users/zsh-autosuggestions/issues) to see if someone else has already reported it.
+
+
+### Reporting an Issue
+
+Before reporting an issue, please try temporarily disabling sections of your configuration and other plugins that may be conflicting with this plugin to isolate the problem.
+
+When reporting an issue, please include:
+
+- The smallest, simplest `.zshrc` configuration that will reproduce the problem. See [this comment](https://github.com/zsh-users/zsh-autosuggestions/issues/102#issuecomment-180944764) for a good example of what this means.
+- The version of zsh you're using (`zsh --version`)
+- Which operating system you're running
+
+
+## Uninstallation
+
+1. Remove the code referencing this plugin from `~/.zshrc`.
+
+2. Remove the git repository from your hard drive
+
+    ```sh
+    rm -rf ~/.zsh/zsh-autosuggestions # Or wherever you installed
+    ```
+
+
+## Development
+
+### Build Process
+
+Edit the source files in `src/`. Run `make` to build `zsh-autosuggestions.zsh` from those source files.
+
+
+### Pull Requests
+
+Pull requests are welcome! If you send a pull request, please:
+
+- Request to merge into the `develop` branch (*NOT* `master`)
+- Match the existing coding conventions.
+- Include helpful comments to keep the barrier-to-entry low for people new to the project.
+- Write tests that cover your code as much as possible.
+
+
+### Testing
+
+Testing is performed with [`shunit2`](https://github.com/kward/shunit2) (v2.1.6). Documentation can be found [here](http://shunit2.googlecode.com/svn/trunk/source/2.1/doc/shunit2.html).
+
+The test script lives at `script/test_runner.zsh`. To run the tests, run `make test`.
 
 
 ## License
