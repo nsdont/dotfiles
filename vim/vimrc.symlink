@@ -7,39 +7,38 @@ set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'wakatime/vim-wakatime'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'majutsushi/tagbar'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'klen/python-mode'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'rust-lang/rust.vim'
-"Plugin 'davidhalter/jedi'
-Plugin 'honza/vim-snippets'
-Plugin 'SirVer/ultisnips' 
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
-Plugin 'Valloric/MatchTagAlways'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'marijnh/tern_for_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'wakatime/vim-wakatime'
+Plug 'easymotion/vim-easymotion'
+Plug 'majutsushi/tagbar'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'klen/python-mode'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'dyng/ctrlsf.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'nvie/vim-flake8'
+Plug 'scrooloose/nerdcommenter'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'rust-lang/rust.vim'
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' 
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+Plug 'Valloric/MatchTagAlways'
+Plug 'Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --gocode-completer --tern-completer'}
+Plug 'marijnh/tern_for_vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
+" Add plugins to &runtimepath
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ 基础配置
@@ -312,19 +311,22 @@ let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-"let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+let g:ctrlp_user_command = 'ag %s -g ""'
 
+" use ag, g:ctrlp_custom_ignore is useless.
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](node_modules|target|dist|py_env-default|media|staticfiles)|(\.(swp|ico|git|svn))$',
+  \ 'dir':  '\v[\/](node_modules|target|dist|py_env-default|media|staticfiles|static/img)|(\.(swp|ico|git|svn))$',
   \ 'file': '\v\.(exe|so|dll)|pyc$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
+let g:ctrlp_reuse_window = 'NERD\|help\|quickfix'
 
 """"""""""""""""""""""""""""""
 " => ctrlsf.vim
 """"""""""""""""""""""""""""""
 let g:ctrlsf_position = 'bottom'
+let g:ctrlsf_ackprg = 'ag'
 nmap <c-c> <Plug>CtrlSFPrompt
 
 """"""""""""""""""""""""""""""
@@ -377,8 +379,9 @@ autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>pv :!
 "我们采取其它方案来进行检查
 let g:syntastic_html_checkers = []
 "let g:syntastic_ignore_files=[".*\.py$"]
-let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_checkers = []
 "let g:syntastic_python_pylint_args=" ${default_args}"
+let g:syntastic_javascript_checkers = ['eslint']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -387,7 +390,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
+let g:syntastic_mode_map = { 'mode': 'active',
+                            \'active_filetypes': ['javascript'],
+                            \'passive_filetypes': ['python'] }
 
 nmap <leader>c :SyntasticCheck<cr>
 
