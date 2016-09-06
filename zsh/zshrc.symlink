@@ -42,7 +42,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git cp docker extract git-extract autojump brew osx zsh-syntax-highlighting autopep8 autoenv)
+plugins=(git cp docker extract git-extract autojump brew osx zsh-syntax-highlighting autopep8)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,13 +104,6 @@ alias djh='docker-compose run --rm server coverage html'
 source /usr/local/bin/virtualenvwrapper.sh
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 
-# cheat setting
-export EDITOR=/usr/local/bin/vim
-export CHEATCOLOR=true
-
-# autoenv
-[ -f .env ] && source .env
-
 # go
 export GOPATH=~/Documents/Practice/go
 
@@ -127,6 +120,7 @@ echo
 source ~/.dotfiles/lib/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # cheat
+export EDITOR=/usr/local/bin/vim
 export DEFAULT_CHEAT_DIR="$HOME/.dotfiles/cheat"
 export CHEATCOLORS=true
 
@@ -149,3 +143,11 @@ vpn_start
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Setting ag as the default source for fzf
+# Respecting .gitignore, .hgignore, and svn:ignore
+export FZF_DEFAULT_COMMAND='ag -g ""'
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# autoenv
+source $(brew --prefix autoenv)/activate.sh
