@@ -43,6 +43,7 @@ binaries=(
   mackup
   mysql
   mono
+  m-cli
   nginx
   nmap
   node

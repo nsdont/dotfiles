@@ -41,9 +41,10 @@ directory = Mackup
 [applications_to_sync]
 atom
 dash
+docker
 flux
 keka
-iterm2
+Terminal
 moom
 navicat
 tower-2
@@ -55,6 +56,7 @@ oh-my-zsh
 sourcetree
 ssh
 sublime-text-3
+vscode
 
 # List of applications you want to ignore
 # One application name per line

@@ -5,7 +5,10 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="custom"
+# ZSH_THEME="custom"
+ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -42,12 +45,21 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git cp docker extract git-extract autojump brew osx zsh-syntax-highlighting autopep8)
+plugins=(git cp docker extract git-extract autojump brew osx zsh-syntax-highlighting autopep8 pip)
+
+# HISTORY
+export HIST_STAMPS="yyyy-mm-dd"
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=$HOME/.dotfiles/bin:$HOME/.rvm/bin:node_modules/.bin:$HOME/bin:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+export PATH=node_modules/.bin:$HOME/.nvm/versions/node/v8.1.4/bin/:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.dotfiles/bin:$HOME/.rvm/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+
+# nvm
+# export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias load_nvm='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -62,21 +74,19 @@ alias -s bz2='tar -xjvf'
 
 #alias fab='fab -f ~/fabfile.py'
 alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
 alias grep="grep --color=auto"
 alias mocha='mocha -R spec'
 alias pgstart="pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
 alias pgstop="pg_ctl -D /usr/local/var/postgres stop -s -m fast"
-alias vpn_start="export http_proxy='http://127.0.0.1:8118'; export https_proxy='http://127.0.0.1:8118'"
 alias git_set_proxy="git config --global http.proxy http://127.0.0.1:8118; git config --global https.proxy http://127.0.0.1:8118"
 alias git_unset_proxy="git config --global  --unset http.proxy; git config --global --unset https.proxy "
 alias charles_proxy="export http_proxy='http://127.0.0.1:8888'; export https_proxy='http://127.0.0.1:8888'"
 alias hidefile="defaults write com.apple.finder AppleShowAllFiles No && killall Finder"
 alias showfile="defaults write com.apple.finder AppleShowAllFiles Yes && killall Finder"
 alias cnpm="npm --registry=https://registry.npm.taobao.org \
-    --cache=$HOME/.npm/.cache/cnpm \
-    --disturl=https://npm.taobao.org/dist \
-    --userconfig=$HOME/.cnpmrc"
+--cache=$HOME/.npm/.cache/cnpm \
+--disturl=https://npm.taobao.org/dist \
+--userconfig=$HOME/.cnpmrc"
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 alias gfb='git fetch && git rebase -i origin/develop'
 alias ufab="fab -f ~/Documents/Source/Abstack/fabfile/fabfile"
@@ -90,12 +100,32 @@ alias angrok='~/bin/angrok --config ~/bin/angrok.cfg'
 # git
 alias gg="git fetch upstream ; git merge upstream/\`git rev-parse --abbrev-ref HEAD\`"
 alias ggg="git co develop; gg;"
+alias g_release="curday=`date +%Y%m%d`; git commit -m \"Added $curday release note.\" && git flow release finish $curday"
 
 # docker
 alias dj='docker-compose run --rm server'
 alias djs='docker-compose run --rm --service-ports server'
-alias djt='docker-compose run --rm server coverage run --source=. ./manage.py test -k && docker-compose run --rm server coverage report' 
-alias djh='docker-compose run --rm server coverage html' 
+alias djt='docker-compose run --rm server coverage run --source=. ./manage.py test -k && docker-compose run --rm server coverage report'
+alias djh='docker-compose run --rm server coverage html'
+
+# u
+alias upip='PIP_CONFIG_FILE=~/Source/uyun/pip.conf pip'
+
+# where proxy
+proxy () {
+  export http_proxy="http://127.0.0.1:8118"
+  export https_proxy="http://127.0.0.1:8118"
+  export all_proxy="http://127.0.0.1:8118"
+  echo "HTTP Proxy on"
+}
+
+# where noproxy
+noproxy () {
+  unset http_proxy
+  unset https_proxy
+  unset all_proxy
+  echo "HTTP Proxy off"
+}
 
 # function
 # function acm {gcc -o run "$1" && cat input | ./run}
@@ -105,16 +135,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 
 # go
-export GOPATH=~/Documents/Practice/go
-
-# fortune
-echo
-echo "=============== Quote Of The Day ==============="
-echo
-fortune
-echo
-echo "================================================"
-echo
+export GOPATH=~/go
 
 # Setup zsh-autosuggestions
 source ~/.dotfiles/lib/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -128,18 +149,14 @@ export CHEATCOLORS=true
 eval "$(thefuck --alias)"
 
 # pyenv
-eval "$(pyenv init -)"
-export PYENV_ROOT=/usr/local/var/pyenv
-
-# nvm
-export NVM_DIR=~/.nvm
-. $(brew --prefix nvm)/nvm.sh
+# eval "$(pyenv init -)"
+# export PYENV_ROOT=/usr/local/var/pyenv
 
 # CMAKE
 export CMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.5.1_2/lib/cmake:$CMAKE_PREFIX_PATH
 
 # auto start vpn
-vpn_start
+proxy
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -150,4 +167,10 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # autoenv
-source $(brew --prefix autoenv)/activate.sh
+# source $(brew --prefix autoenv)/activate.sh
+
+# .env
+[ -f .env ] && source .env
+
+# other env
+[ -f ~/.secret.sh ] && source ~/.secret.sh

@@ -36,6 +36,11 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --gocode-completer --tern-completer'}
 Plug 'marijnh/tern_for_vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'leafgarland/typescript-vim'
+Plug 'ybian/smartim'
+Plug 'editorconfig/editorconfig-vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -89,7 +94,7 @@ set fdm=indent
 " set nofoldenable
 " 临时启动 vim 时开启折叠代码
 set foldenable
-set foldlevelstart=10
+"set foldlevelstart=10
 set foldnestmax=10
 nnoremap <space> za
 set foldmethod=indent
@@ -419,7 +424,7 @@ let g:pymode_breakpoint_bind = '<leader>b'
 "let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Don't autofold code
-let g:pymode_folding = 0
+let g:pymode_folding = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => wakatime

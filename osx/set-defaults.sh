@@ -781,6 +781,13 @@ defaults write com.apple.dock showhidden -bool true
 # defaults write com.twitter.twitter-mac HideInBackground -bool true
 
 ###############################################################################
+# Visual Studio Code.app                                                                 #
+###############################################################################
+
+# j, k and others don't repeat when I hold them down.
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
+###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 
