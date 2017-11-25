@@ -111,6 +111,9 @@ alias djh='docker-compose run --rm server coverage html'
 # u
 alias upip='PIP_CONFIG_FILE=~/Source/uyun/pip.conf pip'
 
+# aria2
+alias start_aria2="aria2c --conf-path="$HOME/.config/aria2.conf" --all-proxy=$http_proxy  -D"
+
 # where proxy
 proxy () {
   export http_proxy="http://127.0.0.1:8118"
@@ -174,3 +177,5 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # other env
 [ -f ~/.secret.sh ] && source ~/.secret.sh
+
+

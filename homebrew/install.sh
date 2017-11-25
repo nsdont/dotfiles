@@ -9,16 +9,20 @@
 binaries=(
   ack
   aircrack-ng
+  aria2
+  asciinema
   autoconf
   autoenv
   autojump
+  chromedriver
   cmake
   coreutils
   curl
   ctags
   erlang
-  fortune
   freetype
+  highlight
+  htop-osx
   go
   git
   git-flow
@@ -37,12 +41,11 @@ binaries=(
   libtiff
   libyaml
   ruby
-  fortune
   openjpeg
   macvim
   mackup
   mysql
-  mono
+  mosh
   m-cli
   nginx
   nmap
@@ -50,12 +53,15 @@ binaries=(
   openjpeg
   openssl
   postgresql
+  pyenv
   python
   python3
   rabbitmq
   redis
   ssh-copy-id
   sqlite
+  the_silver_searche
+  thefuck
   trash
   tree
   vim
@@ -68,48 +74,52 @@ binaries=(
 apps=(
   1password
   alfred
+  anki
+  bartender
+  bilibili
   calibre
+  charles
+  daisydisk
   dash
   dropbox
-  dockertoolbox
-  dayone-cli
+  docker
   evernote
   flux
+  fantastical
+  gas-mask
   google-chrome
+  iina
   istat-menus
   iterm2
-  kaleidoscope
   keka
   kindle
-  mou
-  mplayerx
+  licecap
+  manico
   moom
-  navicat-premium
-  neteasemusic
-  nutstore
   omnifocus
   omnigraffle
   omnioutliner
   omniplan
+  openemu
   paw
   qlcolorcode
+  qlimagesize
+  qlprettypatch
   qlmarkdown
   qlstephen
-  qq
+  qlvideo
+  quicklook-cs
+  quicklook-json
+  quicklookase
+  webpquicklook
   rdm
-  recordit
-  seafile-client
-  shadowsocksx
+  #recordit
+  slack
   skype
-  sourcetree
-  sogouinput
-  sublime-text3
-  textexpander
   thunder
-  today-scripts
-  utorrent
   virtualbox
   vagrant
+  visual-studio-code
 )
 
 # Fonts
