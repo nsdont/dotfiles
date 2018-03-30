@@ -125,6 +125,7 @@ apps=(
 # Fonts
 fonts=(
   font-source-code-pro
+  font-source-code-pro-for-powerline
 )
 
 echo "Update Homebrew..."
