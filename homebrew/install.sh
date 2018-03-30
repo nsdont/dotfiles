@@ -108,7 +108,7 @@ apps=(
   qlmarkdown
   qlstephen
   qlvideo
-  quicklook-cs
+  quicklook-csv
   quicklook-json
   quicklookase
   webpquicklook
