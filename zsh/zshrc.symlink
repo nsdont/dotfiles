@@ -53,13 +53,13 @@ export HIST_STAMPS="yyyy-mm-dd"
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=node_modules/.bin:$HOME/.nvm/versions/node/v8.1.4/bin/:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.dotfiles/bin:$HOME/.rvm/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+export PATH=node_modules/.bin:$HOME/.nvm/versions/node/v8.11.0/bin/:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.dotfiles/bin:$HOME/.rvm/bin:$HOME/bin:$(pyenv root)/shims:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 # nvm
 # export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-alias load_nvm='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+alias load_nvm='export NVM_DIR="$HOME/.nvm" && [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"'
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -134,8 +134,11 @@ noproxy () {
 # function acm {gcc -o run "$1" && cat input | ./run}
 
 # loading virtualenvwrapper
-source /usr/local/bin/virtualenvwrapper.sh
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+#source /usr/local/bin/virtualenvwrapper.sh
+#export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+
+# pipenv
+export PIPENV_DEFAULT_PYTHON_VERSION=2.7
 
 # go
 export GOPATH=~/go
@@ -154,6 +157,7 @@ eval "$(thefuck --alias)"
 # pyenv
 # eval "$(pyenv init -)"
 # export PYENV_ROOT=/usr/local/var/pyenv
+
 
 # CMAKE
 export CMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.5.1_2/lib/cmake:$CMAKE_PREFIX_PATH
@@ -178,4 +182,12 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # other env
 [ -f ~/.secret.sh ] && source ~/.secret.sh
 
+# disable tar create ._foo file
+# https://superuser.com/questions/61185/why-do-i-get-files-like-foo-in-my-tarball-on-os-x
+export COPYFILE_DISABLE=1
 
+# ImageMagick
+export MAGICK_HOME=/usr/local/opt/imagemagick@6
+
+# puppeteer
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
