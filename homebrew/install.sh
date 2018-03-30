@@ -60,7 +60,7 @@ binaries=(
   redis
   ssh-copy-id
   sqlite
-  the_silver_searche
+  the_silver_searcher
   thefuck
   trash
   tree
