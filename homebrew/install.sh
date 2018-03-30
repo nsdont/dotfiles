@@ -140,7 +140,6 @@ brew install bash
 # Install Homebrew Cask
 brew tap caskroom/fonts
 brew tap caskroom/versions
-brew install caskroom/cask/brew-cask
 
 brew tap eddieantonio/eddieantonio
 
