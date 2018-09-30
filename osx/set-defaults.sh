@@ -217,7 +217,7 @@ defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 # Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0
+defaults write NSGlobalDomain KeyRepeat -int 1
 
 # Set language and text formats
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
@@ -235,6 +235,9 @@ defaults write NSGlobalDomain KeyRepeat -int 0
 
 # Stop iTunes from responding to the keyboard media keys
 # launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+
+# Use AirDrop over every interface. srsly this should be a default.
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
 ###############################################################################
 # Screen                                                                      #
@@ -275,10 +278,10 @@ defaults write com.apple.finder NewWindowTarget -string "PfLo"
 defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Downloads/"
 
 # Show icons for hard drives, servers, and removable media on the desktop
-# defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 # defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
 # defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-# defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
 # Finder: show hidden files by default
 # defaults write com.apple.finder AppleShowAllFiles -bool true
@@ -348,7 +351,7 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
 # Use column view in all Finder windows by default
 # Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`, `Nlsv`
-defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Disable the warning before emptying the Trash
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
@@ -363,7 +366,7 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 # sudo nvram boot-args="mbasd=1"
 
 # Show the ~/Library folder
-# chflags nohidden ~/Library
+chflags nohidden ~/Library
 
 # Remove Dropbox’s green checkmark icons in Finder
 # file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
@@ -469,8 +472,8 @@ defaults write com.apple.dock showhidden -bool true
 # defaults write com.apple.dock wvous-tr-corner -int 4
 # defaults write com.apple.dock wvous-tr-modifier -int 0
 # Bottom left screen corner → Start screen saver
-# defaults write com.apple.dock wvous-bl-corner -int 5
-# defaults write com.apple.dock wvous-bl-modifier -int 0
+defaults write com.apple.dock wvous-bl-corner -int 5
+defaults write com.apple.dock wvous-bl-modifier -int 0
 
 ###############################################################################
 # Safari & WebKit                                                             #
@@ -506,7 +509,7 @@ defaults write com.apple.dock showhidden -bool true
 # defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
 
 # Enable Safari’s debug menu
-# defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
 # Make Safari’s search banners default to Contains instead of Starts With
 # defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
@@ -515,12 +518,12 @@ defaults write com.apple.dock showhidden -bool true
 # defaults write com.apple.Safari ProxiesInBookmarksBar "()"
 
 # Enable the Develop menu and the Web Inspector in Safari
-# defaults write com.apple.Safari IncludeDevelopMenu -bool true
-# defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-# defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
 
 # Add a context menu item for showing the Web Inspector in web views
-# defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
 ###############################################################################
 # Mail                                                                        #
