@@ -14,21 +14,29 @@ binaries=(
   autoconf
   autoenv
   autojump
+  bash
+  bash-completion
+  bat
+  cairo
   chromedriver
   cmake
   coreutils
-  curl
+  cscope
   ctags
+  curl
+  diff-so-fancy
   erlang
+  fd
+  findutils
+  fping
   freetype
-  highlight
-  htop-osx
   go
   git
   git-flow
   gettext
   goaccess
   graphviz
+  highlight
   htop-osx
   imgcat
   redis
@@ -39,33 +47,33 @@ binaries=(
   libmagic
   libpng
   libtiff
+  libtool
   libyaml
   ruby
-  openjpeg
   macvim
   mackup
-  mysql
   mosh
   m-cli
+  openjpeg
   nginx
   nmap
   node
   openjpeg
   openssl
-  postgresql
   pyenv
   python
   python3
-  rabbitmq
-  redis
+  rsync
   ssh-copy-id
   sqlite
   the_silver_searcher
   thefuck
   trash
   tree
+  tldr
   vim
   wget
+  yarn
   zsh
   zsh-completions
 )
