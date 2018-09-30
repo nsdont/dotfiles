@@ -23,7 +23,7 @@
   log = auto
   ui = true
 [core]
-  excludesfile = ~/.gitignore_global
+	excludesfile = /Users/xiaowei/.gitignore
   editor = vim
   autocrlf = input
   safecrlf = false
@@ -58,7 +58,7 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [filter "lfs"]
     clean = git-lfs clean %f
@@ -70,3 +70,8 @@
 ;   proxy = socks5://127.0.0.1:1080
 [status]
     submoduleSummary = true
+[http]
+	sslVerify = false
+[pager]
+       diff = diff-so-fancy | less --tabs=1,5 -RFX
+       show = diff-so-fancy | less --tabs=1,5 -RFX

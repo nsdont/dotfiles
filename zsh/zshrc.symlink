@@ -89,7 +89,7 @@ alias cnpm="npm --registry=https://registry.npm.taobao.org \
 --userconfig=$HOME/.cnpmrc"
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
 alias gfb='git fetch && git rebase -i origin/develop'
-alias ufab="fab -f ~/Documents/Source/Abstack/fabfile/fabfile"
+alias ufab="fab -f ~/Documents/source/Abstack/fabfile/fabfile"
 alias http_track="export http_proxy=http://127.0.0.1:9396"
 
 alias pip_upgrade="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
@@ -109,10 +109,18 @@ alias djt='docker-compose run --rm server coverage run --source=. ./manage.py te
 alias djh='docker-compose run --rm server coverage html'
 
 # u
-alias upip='PIP_CONFIG_FILE=~/Source/uyun/pip.conf pip'
+alias upip='PIP_CONFIG_FILE=~/source/uyun/pip.conf pip'
+alias upip2='PIP_CONFIG_FILE=~/source/uyun/pip.conf pip2'
+alias upip3='PIP_CONFIG_FILE=~/source/uyun/pip.conf pip3'
 
 # aria2
 alias start_aria2="aria2c --conf-path="$HOME/.config/aria2.conf" --all-proxy=$http_proxy  -D"
+
+# cli-improved https://remysharp.com/2018/08/23/cli-improved
+alias cat='bat'
+alias ping='prettyping --nolegend'
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+alias help='tldr'
 
 # where proxy
 proxy () {
