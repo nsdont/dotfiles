@@ -152,6 +152,8 @@ install_dotfiles () {
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
+
+  link_file $DOTFILES_ROOT/mackup/mackup_custom_application $HOME/.mackup
 }
 
 install_homebrew

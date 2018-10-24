@@ -18,7 +18,6 @@ binaries=(
   bash-completion
   bat
   cairo
-  chromedriver
   cmake
   coreutils
   cscope
@@ -80,36 +79,37 @@ binaries=(
 
 # Apps
 apps=(
-  1password
-  alfred
-  anki
-  bartender
-  bilibili
-  calibre
-  charles
-  daisydisk
-  dash
-  dropbox
+  #1password
+  #alfred
+  #anki
+  #bartender
+  #bilibili
+  #calibre
+  #charles
+  #chromedriver
+  #daisydisk
+  #dash
+  #dropbox
   docker
-  evernote
-  flux
-  fantastical
-  gas-mask
-  google-chrome
-  iina
-  istat-menus
-  iterm2
-  keka
-  kindle
-  licecap
-  manico
-  moom
-  omnifocus
-  omnigraffle
-  omnioutliner
-  omniplan
-  openemu
-  paw
+  #evernote
+  #flux
+  #fantastical
+  #gas-mask
+  #google-chrome
+  #iina
+  #istat-menus
+  #iterm2
+  #keka
+  #kindle
+  #licecap
+  #manico
+  #moom
+  #omnifocus
+  #omnigraffle
+  #omnioutliner
+  #omniplan
+  #openemu
+  #paw
   qlcolorcode
   qlimagesize
   qlprettypatch
@@ -120,14 +120,14 @@ apps=(
   quicklook-json
   quicklookase
   webpquicklook
-  rdm
+  #rdm
   #recordit
-  slack
-  skype
-  thunder
-  virtualbox
+  #slack
+  #skype
+  #thunder
+  #virtualbox
   vagrant
-  visual-studio-code
+  #visual-studio-code
 )
 
 # Fonts
@@ -161,10 +161,9 @@ brew cask install ${fonts[@]}
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
 echo "Installing apps..."
-sudo brew cask install -v --appdir="/Applications" ${apps[@]}
+brew cask install -v --appdir="/Applications" ${apps[@]}
 
 # clean things up
 brew cleanup
-brew cask cleanup
 
 exit 0
