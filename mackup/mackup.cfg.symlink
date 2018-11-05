@@ -55,10 +55,13 @@ popclip
 istat-menus-5
 oh-my-zsh
 sourcetree
+mybin
+myconfig
 myssh
 sublime-text-3
 vscode
 bartender
+node_yarn
 
 # List of applications you want to ignore
 # One application name per line

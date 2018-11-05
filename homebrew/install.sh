@@ -18,6 +18,7 @@ binaries=(
   bash-completion
   bat
   cairo
+  cheat
   cmake
   coreutils
   cscope
@@ -65,6 +66,7 @@ binaries=(
   rsync
   ssh-copy-id
   sqlite
+  stormssh
   the_silver_searcher
   thefuck
   trash
