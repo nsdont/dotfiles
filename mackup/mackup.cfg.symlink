@@ -59,9 +59,11 @@ mybin
 myconfig
 myssh
 sublime-text-3
-vscode
+ideavim
+#vscode
 bartender
 node_yarn
+wakatime
 
 # List of applications you want to ignore
 # One application name per line

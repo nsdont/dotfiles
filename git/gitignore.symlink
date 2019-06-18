@@ -1,13 +1,52 @@
+# Folder view configuration files
 .DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
 *~
-*.swp
+
+# tags
 .filenametags
-fabfile.py
 .tags_sorted_by_file
 .tags
-.env
-*.ipynb
-.vscode/
 
+# ipythone notebook
+*.ipynb
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Compiled Python files
+*.pyc
+
+# Compiled C++ files
+*.out
+
+# Application specific files
+venv
+node_modules
+.sass-cache
+
+# Temp File
+*.swp
+*.swa
+*.swo
+
+# github merge file
+*.orig
+
+# vscode 
+.vscode
+
+# idea
+.idea
+
+# documents
 _开发文档/
 _开发资料/
+fabfile.py
+.env
+.python-version

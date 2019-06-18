@@ -23,7 +23,7 @@
   log = auto
   ui = true
 [core]
-	excludesfile = /Users/xiaowei/.gitignore
+	excludesfile = ~/.gitignore
   editor = vim
   autocrlf = input
   safecrlf = false
