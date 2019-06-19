@@ -50,7 +50,7 @@ binaries=(
   libtool
   libyaml
   ruby
-  macvim
+  #macvim
   mackup
   mosh
   m-cli
