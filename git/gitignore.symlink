@@ -50,3 +50,6 @@ _开发资料/
 fabfile.py
 .env
 .python-version
+
+Pipfile
+Pipfile.lock

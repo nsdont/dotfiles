@@ -47,7 +47,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git cp docker extract git-extract autojump brew osx zsh-syntax-highlighting autopep8 pip)
+plugins=(git cp docker extract autojump brew osx zsh-syntax-highlighting autopep8 pip)
 
 # HISTORY
 export HIST_STAMPS="yyyy-mm-dd"
@@ -123,6 +123,10 @@ alias cat='bat'
 alias ping='prettyping --nolegend'
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias help='tldr'
+alias ls='lsd'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
 
 # where proxy
 proxy () {
