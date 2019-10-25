@@ -55,7 +55,7 @@ export HIST_STAMPS="yyyy-mm-dd"
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=$HOME/.jenv/bin:node_modules/.bin:$HOME/.nvm/versions/node/v10.15.1/bin/:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.dotfiles/bin:$HOME/.rvm/bin:$HOME/bin:$(pyenv root)/shims:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+export PATH=$HOME/.jenv/bin:node_modules/.bin:$HOME/.nvm/versions/node/v10.15.1/bin/:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.dotfiles/bin:$HOME/.rvm/bin:$HOME/bin:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 # nvm
 # export NVM_DIR="$HOME/.nvm"
@@ -169,8 +169,10 @@ export CHEATCOLORS=true
 eval "$(thefuck --alias)"
 
 # pyenv
-# eval "$(pyenv init -)"
+# $(pyenv root)/shims:
 # export PYENV_ROOT=/usr/local/var/pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # java env
 eval "$(jenv init -)"
@@ -211,3 +213,10 @@ export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 # homebrew
 export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+
+# c build flag
+export "CFLAGS=-I/usr/local/include -L/usr/local/lib" 
+
+# https://github.com/Agnewee/atssh
+export ATSSH_ROOT=$HOME/.config/atssh
+export PATH=~/.atssh:$PATH
