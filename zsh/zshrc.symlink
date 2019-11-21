@@ -55,13 +55,26 @@ export HIST_STAMPS="yyyy-mm-dd"
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=$HOME/bin:$HOME/.jenv/bin:node_modules/.bin:$HOME/.nvm/versions/node/v10.15.1/bin/:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.dotfiles/bin:$HOME/.rvm/bin:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+export PATH=$HOME/bin:$HOME/.jenv/bin:node_modules/.bin:$HOME/.local/bin:$HOME/.yarn/bin:$HOME/go/bin:$HOME/.dotfiles/bin:$HOME/.rvm/bin:/usr/local/bin:$PATH:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
 
 # nvm
-# export NVM_DIR="$HOME/.nvm"
+# https://www.growingwiththeweb.com/2018/01/slow-nvm-init.html
+#export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-alias load_nvm='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+#alias load_nvm='export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"'
+if [ -s "$HOME/.nvm/nvm.sh" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+  declare -a __node_commands=('nvm' 'node' 'npm' 'yarn' 'gulp' 'grunt' 'webpack')
+  function __init_nvm() {
+    for i in "${__node_commands[@]}"; do unalias $i; done
+    . "$NVM_DIR"/nvm.sh
+    unset __node_commands
+    unset -f __init_nvm
+  }
+  for i in "${__node_commands[@]}"; do alias $i='__init_nvm && '$i; done
+fi
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
